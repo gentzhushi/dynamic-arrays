@@ -1,6 +1,6 @@
 # Vargje me gjatësi Dinamike në C
 
-Kjo librari gjendet krejt në ***veç 1 header file***.
+Kjo librari gjendet krejt në ***veç 1 header file***, dhe nuk ka varshmëri të jashtme. Varshmëritë e vetme janë `stddef.h`, `stdlib.h`, `string.h`.
 
 D.m.th. për me përdorë:
 ```c
