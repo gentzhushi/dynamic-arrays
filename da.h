@@ -41,7 +41,6 @@ void		free_vector(vector_t *v);
 
 #include<stdlib.h>
 #include<string.h>
-#include<stdio.h> // fshije qita ma von
 
 /**
  * Metodat
