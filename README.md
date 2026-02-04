@@ -33,6 +33,6 @@ Kjo është veç si proof-of-concept, për arsye rekreacionale.
 
 Gjithashtu është e shkrume me paragimën e OOP-së.
 
-Nëse doni me shkrujt implementimin e sajna vet, muni veq me hjekë rreshtin `#define DYNAMIC_ARRAY_IMPLEMENTATION`. Tani muni me i implementu vet.
+Nëse doni me shkrujt implementimin e sajna vet, muni veq me hjekë rreshtin `#define DYNAMIC_ARRAY_IMPLEMENTATION`. Tani muni me i implementu vet funksionet apo "metodat", konstruktorin & destruktorin e strukturës `vector_t`.
 
 <img width="100%" height="auto" alt="Screenshot 2026-02-04 at 14 35 36" src="https://github.com/user-attachments/assets/860ff5d4-aadc-4089-900e-0e567b21a9d5" />
