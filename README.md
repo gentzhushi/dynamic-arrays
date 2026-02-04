@@ -4,6 +4,8 @@ Kjo librari gjendet krejt në ***veç 1 header file***.
 
 D.m.th. për me përdorë:
 ```c
+#include<stdio.h>
+
 #define DYNAMIC_ARRAY_IMPLEMENTATION
 #include "da.h"
 
