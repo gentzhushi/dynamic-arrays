@@ -47,8 +47,6 @@ void		free_vector(vector_t *v);
  * Metodat
  */
 void* v_front(vector_t *self) {
-	printf("v_front");
-
 	if (!self || self->count == 0)
 		return NULL;
 
@@ -56,8 +54,6 @@ void* v_front(vector_t *self) {
 }
 
 void* v_back(vector_t *self) {
-	printf("v_back");
-
 	if (!self || self->count == 0)
 		return NULL;
 	
@@ -66,8 +62,6 @@ void* v_back(vector_t *self) {
 }
 
 void* v_at(vector_t *self, size_t i) {
-	printf("v_at");
-	
 	if (!self || self->count == 0)
 		return NULL;
 
@@ -75,8 +69,6 @@ void* v_at(vector_t *self, size_t i) {
 }
 
 void* v_pop_f(vector_t *self) {
-	printf("v_pop_front");
-
 	if (!self || self->count == 0)
 		return NULL;
 	
@@ -85,47 +77,41 @@ void* v_pop_f(vector_t *self) {
 }
 
 void* v_pop_b(vector_t *self) {
-	printf("v_pop_back");
-		
 	if (!self || self->count == 0)
 		return NULL;
 		
-	return (unsigned char*)self->items + --self->count * self->data_size;
+	void* tmp = (unsigned char*)self->items + --(self->count) * self->data_size;
+
+	return tmp;
 }
 
 void v_push_f(vector_t *self, void *value) {
 	(void)self;
 	(void)value;
-	printf("push_front sosht i implementum.");
 }
 
 void v_push_b(vector_t *self, void *value) {
-	printf("v_push_back");
 
-	if (!self) return;
-
-	if (self->capacity == 0){
-		self->capacity = 256;
-	} else if (self->count >= self->capacity){
-		self->capacity *= 2;
+	if (!self || !self->data_size) {
+		return;
 	}
 
-	if (self->items == NULL){
+	if (self->capacity == 0 || self->items == NULL){
+		self->capacity = 256;
 		self->items = malloc(self->capacity * self->data_size);
+		if (!self->items) { perror("malloc"); return; }
 	} else if (self->count >= self->capacity){
+		self->capacity *= 2;
 		void *tmp = realloc(self->items, self->capacity * self->data_size);
-		if (!tmp) {
-			perror("v_push_b");
-			return;
-		}
+		if (!tmp) { perror("v_push_b"); return; }
 		self->items = tmp;
 	}
 
-	memcpy((unsigned char*)(self->items + self->count++ * self->data_size),
+	memcpy(((unsigned char*)self->items) + self->count++ * self->data_size,
 			value,
 			self->data_size
 		);
-
+	
 }
 
 /**
