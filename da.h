@@ -1,143 +1,54 @@
-/**
- * DEFINIMI
- */
+#ifndef DYNAMIC_ARRAYS_H_
+#define DYNAMIC_ARRAYS_H_
 
-#ifndef DYNAMIC_ARRAY
-#define DYNAMIC_ARRAY
+#include <stddef.h>
+#include <stdlib.h>
 
-#include<stddef.h>
+typedef struct {
+        size_t capacity;
+        size_t count;
+} da_header_t;
 
-typedef struct vector_s vector_t;
+#define DA_INIT_CAPACITY 32
 
-/**
- * Vektori
- */
-typedef struct vector_s {
-	void 	*items;
+void da_free(void *da);
 
-	size_t 	count;
-	size_t 	capacity;
-	size_t 	data_size;
-	
-	void *(*front)(vector_t *self);
-	void *(*back)(vector_t *self);
-	void *(*at)(vector_t *self, size_t i);
-	void *(*pop_f)(vector_t *self);
-	void *(*pop_b)(vector_t *self);
-	void (*push_f)(vector_t *self, void *value);
-	void (*push_b)(vector_t *self, void *value);
-} vector_t;
+#define da_append(da, val)                                                     \
+        do {                                                                   \
+                if (!da) {                                                     \
+                        da_header_t *new =                                     \
+                            malloc(sizeof(da_header_t) +                       \
+                                   DA_INIT_CAPACITY * sizeof(val));            \
+                        new[0].capacity = DA_INIT_CAPACITY;                    \
+                        new[0].count = 0;                                      \
+                        da = (void *)(new + 1);                                \
+                }                                                              \
+                                                                               \
+                da_header_t *hdr = (da_header_t *)da - 1;                      \
+                                                                               \
+                if (hdr->count >= hdr->capacity) {                             \
+                        hdr->capacity *= 2;                                    \
+                        hdr = realloc(hdr, sizeof(da_header_t) +               \
+                                               (hdr->capacity * sizeof(val))); \
+                        da = (void *)(hdr + 1);                                \
+                }                                                              \
+                                                                               \
+                da[hdr->count++] = val;                                        \
+        } while (0)
 
-vector_t 	new_vector(size_t data_size); // 1 per char etj...
-void		free_vector(vector_t *v);
+#define da_len(da) (((da_header_t *)da - 1)->count)
+#define da_cap(da) (((da_header_t *)da - 1)->capacity)
 
-#endif
+#ifdef DYNAMIC_ARRAYS_IMPLEMENTATION
 
-/**
- * IMPLEMENTIMI
- */
+#include <assert.h>
 
-#ifdef DYNAMIC_ARRAY_IMPLEMENTATION
-
-#include<stdlib.h>
-#include<string.h>
-
-/**
- * Metodat
- */
-void* v_front(vector_t *self) {
-	if (!self || self->count == 0)
-		return NULL;
-
-	return (unsigned char*)self->items;
+void da_free(void *da)
+{
+        free((da_header_t *)da - 1);
+        // assert(0 && "da_free() not implemented.\n");
 }
 
-void* v_back(vector_t *self) {
-	if (!self || self->count == 0)
-		return NULL;
-	
-	return (unsigned char*) 
-		self->items + (self->count - 1) * self->data_size;
-}
+#endif // !DYNAMIC_ARRAYS_IMPLEMENTATION
 
-void* v_at(vector_t *self, size_t i) {
-	if (!self || self->count == 0)
-		return NULL;
-
-	return (unsigned char*)self->items + i * self->data_size;
-}
-
-void* v_pop_f(vector_t *self) {
-	if (!self || self->count == 0)
-		return NULL;
-	
-	self->count--;
-	return (unsigned char*)self->items;
-}
-
-void* v_pop_b(vector_t *self) {
-	if (!self || self->count == 0)
-		return NULL;
-		
-	void* tmp = (unsigned char*)self->items + --(self->count) * self->data_size;
-
-	return tmp;
-}
-
-void v_push_f(vector_t *self, void *value) {
-	(void)self;
-	(void)value;
-}
-
-void v_push_b(vector_t *self, void *value) {
-
-	if (!self || !self->data_size) {
-		return;
-	}
-
-	if (self->capacity == 0 || self->items == NULL){
-		self->capacity = 256;
-		self->items = malloc(self->capacity * self->data_size);
-		if (!self->items) { perror("malloc"); return; }
-	} else if (self->count >= self->capacity){
-		self->capacity *= 2;
-		void *tmp = realloc(self->items, self->capacity * self->data_size);
-		if (!tmp) { perror("v_push_b"); return; }
-		self->items = tmp;
-	}
-
-	memcpy(((unsigned char*)self->items) + self->count++ * self->data_size,
-			value,
-			self->data_size
-		);
-	
-}
-
-/**
- * Konstruktor
- */
-vector_t new_vector(size_t data_size){
-	vector_t v = {0};
-
-	v.data_size = data_size;
-	
-	v.front = v_front;
-	v.back = v_back;
-	v.at = v_at;
-	v.pop_f = v_pop_f;
-	v.pop_b = v_pop_b;
-	v.push_f = v_push_f;
-	v.push_b = v_push_b;
-
-	return v;
-}
-
-/**
- * Destruktor
- */
-void free_vector(vector_t *v){
-	free(v->items);
-	*v = (vector_t){0};
-}
-
-#endif
+#endif // !DYNAMIC_ARRAYS_H_
