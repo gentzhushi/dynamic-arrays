@@ -1,4 +1,4 @@
-# STB-style dynamic arrays library in C
+# STB-style dynamic arrays library in C with generic types
 
 This is a single-file project. In order to use it and its implementations, just copy paste this file to your project, and include it. In order to use the implementation, `#define DYNAMIC_ARRAY_IMPLEMENTATION` before you include it.
 
@@ -26,3 +26,4 @@ int main(void)
 ---
 You should see the following output:
 
+<img width="100%" height="auto" alt="Alphabet printed on screen" src="https://github.com/user-attachments/assets/a6c54f49-4834-43b5-a3bd-5c5932622f60" />
