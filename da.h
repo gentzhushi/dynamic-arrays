@@ -1,6 +1,7 @@
 #ifndef DYNAMIC_ARRAYS_H_
 #define DYNAMIC_ARRAYS_H_
 
+#include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -39,14 +40,26 @@ void da_free(void *da);
 #define da_len(da) (((da_header_t *)da - 1)->count)
 #define da_cap(da) (((da_header_t *)da - 1)->capacity)
 
-#ifdef DYNAMIC_ARRAYS_IMPLEMENTATION
+// TODO: Implement the following
 
-#include <assert.h>
+#define da_ins(da, i, val) (assert(0 && "`da_ins()` is not yet implemented."))
+
+#define da_rem(da, i, val) (assert(0 && "`da_rem()` is not yet implemented."))
+
+#define da_popend(da, i, val)                                                  \
+        (assert(0 && "`da_popend()` is not yet implemented."))
+
+#define da_prepend(da, i, val)                                                 \
+        (assert(0 && "`da_prepend()` is not yet implemented."))
+
+#define da_prepop(da, i, val)                                                  \
+        (assert(0 && "`da_prepop()` is not yet implemented."))
+
+#ifdef DYNAMIC_ARRAYS_IMPLEMENTATION
 
 void da_free(void *da)
 {
         free((da_header_t *)da - 1);
-        // assert(0 && "da_free() not implemented.\n");
 }
 
 #endif // !DYNAMIC_ARRAYS_IMPLEMENTATION
