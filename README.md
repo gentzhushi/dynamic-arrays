@@ -26,3 +26,4 @@ int main(void)
 ---
 You should see the following output:
 
+<img width="100%" height="auto" alt="Alphabet printed on screen" src="https://github.com/user-attachments/assets/a6c54f49-4834-43b5-a3bd-5c5932622f60" />
