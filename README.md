@@ -6,7 +6,7 @@ This is a single-file project. In order to use it and its implementations, just 
 ```c
 #include <stdio.h>
 
-#define DYNAMIC_ARRAY_IMPLEMENTATION
+#define DYNAMIC_ARRAYS_IMPLEMENTATION
 #include "da.h"
 
 int main(void){
